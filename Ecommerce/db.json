@@ -1,0 +1,216 @@
+{
+  "users": [
+    {
+      "id": "a6c3",
+      "name": "saras",
+      "email": "sarass@gmail.com",
+      "password": "00000",
+      "cart": [
+        {
+          "productId": "208a",
+          "name": "Modern sofa",
+          "price": "$899",
+          "img": "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcQAyv__uXt5m3SC_yVtacMho9ZOtJCElPtXm4dILv56yTYSwYuN4fF_-KWWaz6myuAtLbdEPw9gbXoPHFqta2WuSBSpHQ_dIl7bSWKsFRU",
+          "quantity": 11
+        }
+      ],
+      "wishlist": []
+    }
+  ],
+  "productes": [
+    {
+      " id": 1,
+      " name": "Modern sofa",
+      "price": "$899",
+      "img": "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcQAyv__uXt5m3SC_yVtacMho9ZOtJCElPtXm4dILv56yTYSwYuN4fF_-KWWaz6myuAtLbdEPw9gbXoPHFqta2WuSBSpHQ_dIl7bSWKsFRU",
+      "id": "208a"
+    },
+    {
+      " id": 2,
+      "name": "Wooden Bed",
+      "price": "$1199",
+      "img": "https://m.media-amazon.com/images/I/71u3F2NZ9gL.jpg",
+      "id": "4cfe"
+    },
+    {
+      "id": "3",
+      "name": "Office Chair",
+      " price": "$299",
+      "img": "https://media.istockphoto.com/id/943910360/photo/posters-in-cozy-apartment-interior.jpg?s=612x612&w=0&k=20&c=QzNjsxCNMcFNxpn4E2ocPvSU8Ud2S3B_mHyo5L-HOLo="
+    },
+    {
+      "id": "4",
+      " name": "Dining Table",
+      "price": "$1599",
+      "img": "https://www.tradegully.com/wp-content/uploads/2024/04/modern-living-room-furniture.jpg"
+    },
+    {
+      "id": "5",
+      "name": "Bookshelf",
+      "price": "$499",
+      "img": "https://media.designcafe.com/wp-content/uploads/2021/12/27144355/design-cafe-modular-furniture-benefits.jpg"
+    },
+    {
+      "id": "6",
+      "name": "Vintage-Inspired Dressing Table",
+      "price": "$149",
+      "img": "https://i.pinimg.com/736x/d0/f9/b5/d0f9b5788209343742ba01ba1cad5d10.jpg"
+    },
+    {
+      "id": "7",
+      "name": "Kichen Item",
+      "price": "$149",
+      "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSOOy7pSqG8Fm5kSimiWAICgriNItL4QchZ1A&s"
+    },
+    {
+      "id": "8",
+      "name": "Child care",
+      "price": "$149",
+      "img": "https://i.pinimg.com/1200x/ec/a8/7f/eca87f9eb23b53e18f6417f8c8b866fc.jpg"
+    },
+    {
+      "id": "9",
+      "name": "Contemporary lounge Chairs with Table",
+      "price": "$149",
+      "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRgkaqkiFZdHudoMdAnDeUqo3tuii8_emdAnA&s"
+    },
+    {
+      "id": "10",
+      "name": "Study Table",
+      "price": "$149",
+      "img": "https://i.pinimg.com/736x/9f/c3/64/9fc364e2b45936c3547ede0fccc7c661.jpg"
+    },
+    {
+      "id": "11",
+      "name": "Modern Dining Table with Chairs",
+      "price": "$149",
+      "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT09x7icYfNtEqpjb7x2J-GFxrBXRBYXf6ghg&s"
+    },
+    {
+      "id": "12",
+      "name": "Sectional Sofa set",
+      "price": "$149",
+      "img": "https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      "id": "13",
+      "name": "Living Room Interior Set",
+      "price": "$149",
+      "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2CTeKI8V8rkJw611EJ_biOM6Er_mHyBJHMA&s"
+    },
+    {
+      "id": "14",
+      "name": "Dining Table With Chairs",
+      "price": "$149",
+      "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSQFzs6wVWxAgZMkejUJ1ULxy7KWeEsGoqoLA&s"
+    },
+    {
+      "id": "15",
+      "name": "Canopy Bed",
+      "price": "$149",
+      "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT82I78T0HJF1e_NoEKfMCDqj8klX_tFY6QbQ&s"
+    },
+    {
+      "id": "16",
+      "name": "Classic Wooden Bed",
+      "price": "$149",
+      "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTU4Y8wyC_L2vVuufh_Donrw7CIWp_Uf_9TlA&s"
+    },
+    {
+      "id": "17",
+      "name": "Modern platform bed",
+      "price": "$149",
+      "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSOwQYV2dbj1oXDGiatQRyEeJr-_EaBmLAh-w&s"
+    },
+    {
+      "id": "18",
+      "name": "Wooden King Bed",
+      "price": "$149",
+      "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSpbioHi2NeqNS2lfc_SO2DqLDMuGaxNAX2Lg&s"
+    },
+    {
+      "id": "19",
+      "name": "Wooden Accent chairs",
+      "price": "$149",
+      "img": "https://www.zuari-furniture.com/wp-content/uploads/2019/02/dine.jpeg"
+    },
+    {
+      "id": "20",
+      "name": "Living Room sofa set",
+      "price": "$149",
+      "img": "https://www.bhg.com/thmb/E4Qj0pjBaTQPs-1YfLOYj5DLfRg=/1244x0/filters:no_upscale():strip_icc()/grey-walls-turquoise-furniture-8005b71f-0f466e27e01c41edac57c4de38d4d8be.jpg"
+    },
+    {
+      "id": "21",
+      "name": "Syntathic Lather",
+      "price": "$149",
+      "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRV3JbWZe0K13nmEJhNng9Y59WdQC8ZI6Uccg&s"
+    },
+    {
+      "id": "22",
+      "name": "Lenia Queen Panel Bed - Walnut",
+      "price": "$149",
+      "img": "https://cdn-images.article.com/products/SKU15351/2890x1500/image166429.jpg?w=850&q=40&fm=webp&fit=max"
+    },
+    {
+      "id": "23",
+      "name": "Modern Sofa",
+      "price": "$149",
+      "img": "https://www.ikea.com/in/en/images/products/songesand-bedroom-furniture-set-of-5-white__1102144_pe866545_s5.jpg?f=s"
+    },
+    {
+      "id": "24",
+      "name": " Schönes Sofa",
+      "price": "$149",
+      "img": "https://i.pinimg.com/1200x/18/3d/12/183d12d96d5ae19f2e0fc924f460ed2d.jpg"
+    },
+    {
+      "id": "25",
+      "name": "Classic carved chest of drawers",
+      "price": "$149",
+      "img": "https://i.pinimg.com/1200x/49/67/b6/4967b67dc3833f227335306561b71363.jpg"
+    },
+    {
+      "id": "26",
+      "name": "Modular Sofa",
+      "price": "$160",
+      "img": "https://i.pinimg.com/736x/67/dc/ed/67dceda3f7aea3a73ee355bd3d444cef.jpg"
+    },
+    {
+      "id": "27",
+      "name": "Arabic Style Living room design ||",
+      "price": "$200",
+      "img": "https://i.pinimg.com/736x/96/7a/e5/967ae5286208c9da19674d2c3e6a2239.jpg"
+    },
+    {
+      "id": "28",
+      "name": "Armchairs | Velvet, Leather & Linen Armchairs | Soho Home US",
+      "price": "$350",
+      "img": "https://i.pinimg.com/1200x/f5/00/7c/f5007c5fa9ea7e57b6dbcb6872d67cb6.jpg"
+    },
+    {
+      "id": "29",
+      "name": "Esse Counter Stool - Light Oak",
+      "price": "$220",
+      "img": "https://cdn-images.article.com/products/SKU11850/2890x1500/image162235.jpg?w=850&q=40&fm=webp&fit=max"
+    },
+    {
+      "id": "30",
+      "name": "Bench- Walnut and Everest GrayWalnut",
+      "price": "$187",
+      "img": "https://cdn-images.article.com/products/SKU17512/2890x1500/image135247.jpg?w=850&q=40&fm=webp&fit=max"
+    },
+    {
+      "id": "31",
+      "name": "The Compact Home Office Bundle",
+      "price": "$341",
+      "img": "https://cdn-images.article.com/productbundles/393/HERO_MOBILE/productbundle393-1728577305489.jpg?w=850&q=40&fm=webp&fit=max"
+    },
+    {
+      "id": "32",
+      "name": "Wooden Sideboard",
+      "price": "$149",
+      "img": "https://i.pinimg.com/1200x/ce/a1/01/cea1015cbc8ee5e9138f16d51a02bb42.jpg"
+    }
+  ]
+}
