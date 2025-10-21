@@ -1,82 +1,69 @@
 
-
-
-
-
-// CartContext.jsx
-import React, { createContext, useState, useEffect } from "react";
+import React, { createContext, useState, useEffect, useContext } from "react";
 import api from "../Api/Axios-instance";
-import { showSuccess, showError } from "../utils/toast";
+import { AuthContext } from "./Authcontext";
+import toast from "react-hot-toast";
 
 export const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
+  const { user } = useContext(AuthContext);
+  const userId = user?.id || null;
+
   const [cart, setCart] = useState([]);
-  const [wishlist, setWishlist] = useState([]);
-  const [userId, setUserId] = useState(() => {
-    const user = localStorage.getItem("user");
-    return user ? JSON.parse(user).id : null;
-  });
 
-  // Sync userId with localStorage
-  useEffect(() => {
-    const user = localStorage.getItem("user");
-    if (user) {
-      setUserId(JSON.parse(user).id);
-    } else {
-      setUserId(null);
-      setCart([]);
-      setWishlist([]);
-    }
-  }, []);
-
-  // Fetch user data (cart & wishlist)
+  // ================= Fetch user cart when user changes or on refresh =================
   useEffect(() => {
     const fetchUserData = async () => {
-      if (!userId) return;
+      if (!userId) {
+        setCart([]);
+        return;
+      }
+
       try {
         const res = await api.get(`/users/${userId}`);
-        const user = res.data;
-
-        setCart(user.cart || []);
-        setWishlist(user.wishlist || []);
+        const userData = res.data;
+        setCart(userData.cart || []);
       } catch (err) {
         console.error("Error fetching user data:", err);
+        toast.error("Failed to load cart data");
       }
     };
+
     fetchUserData();
   }, [userId]);
 
-  // Helper: update user in db.json
+  // ================= Helper: update user in db.json =================
   const updateUser = async (newData) => {
+    if (!userId) return;
     try {
       const res = await api.get(`/users/${userId}`);
-      const user = res.data;
-      await api.put(`/users/${userId}`, { ...user, ...newData });
+      const userData = res.data;
+      await api.put(`/users/${userId}`, { ...userData, ...newData });
     } catch (err) {
       console.error("Error updating db.json:", err);
-      showError("Failed to sync with database");
+      toast.error("Failed to sync with database");
     }
   };
 
-  // Add to cart
+  // ================= Add to cart =================
   const addToCart = async (product) => {
     if (!userId) {
-      showError("Please login to add products!");
+      toast.error("Please login to add products!");
       return;
     }
 
     try {
-      const existingItem = cart.find(item => item.productId === product.id);
+      const existingItem = cart.find((item) => item.productId === product.id);
       let updatedCart;
 
       if (existingItem) {
-        updatedCart = cart.map(item =>
+        updatedCart = cart.map((item) =>
           item.productId === product.id
             ? { ...item, quantity: item.quantity + 1 }
             : item
         );
-        showSuccess(`Increased quantity of ${product.name}!`);
+        toast.success(`Increased quantity of ${product.name}!`);
       } else {
         const newItem = {
           productId: product.id,
@@ -86,78 +73,78 @@ export const CartProvider = ({ children }) => {
           quantity: 1,
         };
         updatedCart = [...cart, newItem];
-        showSuccess(`${product.name} added to cart!`);
+        toast.success(`${product.name} added to cart!`);
       }
 
       setCart(updatedCart);
       await updateUser({ cart: updatedCart });
     } catch (err) {
       console.error("Error adding to cart:", err);
-      showError("Failed to add item");
+      toast.error("Failed to add item");
     }
   };
 
-  // Update quantity
+  // ================= Update quantity =================
   const updateQuantity = async (productId, newQuantity) => {
     if (!userId || newQuantity < 1) return;
     try {
-      const updatedCart = cart.map(item =>
+      const updatedCart = cart.map((item) =>
         item.productId === productId
           ? { ...item, quantity: newQuantity }
           : item
       );
       setCart(updatedCart);
       await updateUser({ cart: updatedCart });
+      toast.success("Quantity updated!");
     } catch (err) {
       console.error("Error updating quantity:", err);
-      showError("Failed to update quantity");
+      toast.error("Failed to update quantity");
     }
   };
 
-  // Remove item
+  // ================= Remove item =================
   const removeFromCart = async (productId) => {
     if (!userId) return;
     try {
-      const updatedCart = cart.filter(item => item.productId !== productId);
+      const updatedCart = cart.filter((item) => item.productId !== productId);
       setCart(updatedCart);
       await updateUser({ cart: updatedCart });
-      showSuccess("Item removed");
+      toast.success("Item removed from cart");
     } catch (err) {
       console.error("Error removing item:", err);
-      showError("Failed to remove item");
+      toast.error("Failed to remove item");
     }
   };
 
-  // Clear cart
+  // ================= Clear cart =================
   const clearCart = async () => {
     if (!userId) return;
     try {
       setCart([]);
       await updateUser({ cart: [] });
-      showSuccess("Cart cleared");
+      toast.success("Cart cleared successfully!");
     } catch (err) {
       console.error("Error clearing cart:", err);
-      showError("Failed to clear cart");
+      toast.error("Failed to clear cart");
     }
   };
 
   const cartItemsCount = cart.reduce((sum, item) => sum + item.quantity, 0);
 
+  const value = {
+    cart,
+    userId,
+    addToCart,
+    updateQuantity,
+    removeFromCart,
+    clearCart,
+    cartItemsCount,
+  };
+
   return (
-    <CartContext.Provider
-      value={{
-        cart,
-        wishlist,
-        userId,
-        setUserId,
-        addToCart,
-        updateQuantity,
-        removeFromCart,
-        clearCart,
-        cartItemsCount,
-      }}
-    >
+    <CartContext.Provider value={value}>
       {children}
     </CartContext.Provider>
   );
 };
+

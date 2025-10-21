@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Eye, EyeOff, Lock, Mail, User } from "lucide-react";
 import { AuthContext } from "../../Context/Authcontext";
 import LoadingSpinner from "../../components/LoadingSpinner";
+import toast from "react-hot-toast";
 
 export default function Sign() {
   const [name, setName] = useState("");
@@ -34,10 +35,12 @@ export default function Sign() {
               <span className="text-white font-bold">FC</span>
             </div>
             <span className="text-2xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
-              FurniCo
+              HOME HEVEN
             </span>
           </div>
-          <h1 className="text-3xl font-bold text-gray-800 mb-2">Create Account</h1>
+          <h1 className="text-3xl font-bold text-gray-800 mb-2">
+            Create Account
+          </h1>
           <p className="text-gray-600">Join us to discover amazing furniture</p>
         </div>
 
@@ -155,11 +158,17 @@ export default function Sign() {
               />
               <label className="ml-2 text-sm text-gray-600">
                 I agree to the{" "}
-                <Link to="/terms" className="text-indigo-600 hover:text-indigo-800">
+                <Link
+                  to="/terms"
+                  className="text-indigo-600 hover:text-indigo-800"
+                >
                   Terms of Service
                 </Link>{" "}
                 and{" "}
-                <Link to="/privacy" className="text-indigo-600 hover:text-indigo-800">
+                <Link
+                  to="/privacy"
+                  className="text-indigo-600 hover:text-indigo-800"
+                >
                   Privacy Policy
                 </Link>
               </label>
@@ -199,3 +208,5 @@ export default function Sign() {
     </div>
   );
 }
+
+

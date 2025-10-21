@@ -2,6 +2,7 @@ import React from "react";
 import { FaPhoneAlt, FaEnvelope, FaMapMarkerAlt } from "react-icons/fa";
 
 export default function Contact() {
+  window.scrollTo({ top: 0, behavior: "smooth" });
   return (
     <div className="bg-gray-50 min-h-screen py-12 px-6">
       <div className="max-w-6xl mx-auto">
@@ -65,7 +66,7 @@ export default function Contact() {
               </h2>
               <div className="flex items-center space-x-4 mb-4">
                 <FaPhoneAlt className="text-indigo-600 text-xl" />
-                <span className="text-gray-700">+91 98765 43210</span>
+                <span className="text-gray-700">9744395412</span>
               </div>
               <div className="flex items-center space-x-4 mb-4">
                 <FaEnvelope className="text-indigo-600 text-xl" />
@@ -77,18 +78,6 @@ export default function Contact() {
                   123 Furni Street, Kochi, India
                 </span>
               </div>
-            </div>
-
-            {/* Map */}
-            <div className="rounded-2xl overflow-hidden shadow-lg">
-              <iframe
-                title="map"
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3913.0948379553676!2d76.2673!3d9.9312!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b080d%3A0x12345!2sKochi!5e0!3m2!1sen!2sin!4v1630000000000!5m2!1sen!2sin"
-                width="100%"
-                height="250"
-                allowFullScreen=""
-                loading="lazy"
-              ></iframe>
             </div>
           </div>
         </div>

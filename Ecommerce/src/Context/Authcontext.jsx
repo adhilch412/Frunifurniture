@@ -1,13 +1,11 @@
+
 import React, { createContext, useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import { showSuccess, showError } from "../utils/toast";
+import api from "../Api/Axios-instance";
+import { toast } from "react-toastify"; 
 
 export const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
-  const navigate = useNavigate();
-
   const [user, setUser] = useState(() => {
     const storedUser = localStorage.getItem("user");
     return storedUser ? JSON.parse(storedUser) : null;
@@ -16,20 +14,18 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (user) {
-      localStorage.setItem("user", JSON.stringify(user));
-    } else {
-      localStorage.removeItem("user");
-    }
+    if (user) localStorage.setItem("user", JSON.stringify(user));
+    else localStorage.removeItem("user");
   }, [user]);
 
+  // ================= SIGNUP =================
   const signup = async ({ name, email, password }) => {
     setLoading(true);
     try {
-      const res = await axios.get(`http://localhost:5005/users?email=${email}`);
+      const res = await api.get(`/users?email=${email}`);
       if (res.data.length > 0) {
-        showError("Email already exists!");
-        return;
+        toast.error("Email already exists!");    
+        return false;
       }
 
       const newUser = {
@@ -38,60 +34,63 @@ export function AuthProvider({ children }) {
         password,
         cart: [],
         wishlist: [],
+        orders: [],
+        role: "user",
+        isBlock: false,
       };
 
-      await axios.post("http://localhost:5005/users", newUser);
-      showSuccess("Account created successfully!");
-      navigate("/login");
+      const response = await api.post("/users", newUser);
+      setUser(response.data);
+      toast.success("Account created successfully!");  
+      return response.data;
     } catch (err) {
       console.error(err);
-      showError("Signup failed! Please try again.");
+      toast.error("Signup failed! Please try again."); 
+      return false;
     } finally {
       setLoading(false);
     }
   };
 
+  // ================= LOGIN =================
   const login = async (email, password) => {
     setLoading(true);
     try {
-      const res = await axios.get(
-        `http://localhost:5005/users?email=${email}&password=${password}`
-      );
+      const res = await api.get(`/users?email=${email}&password=${password}`);
+      const foundUsers = res.data;
 
-      if (res.data.length === 0) {
-        showError("Invalid email or password!");
-        return;
+      if (foundUsers.length === 0) {
+        toast.error("Invalid email or password!");  
+        return null;
       }
 
-      setUser(res.data[0]);
-      showSuccess(`Welcome back, ${res.data[0].name}!`);
-      navigate("/");
+      const found = foundUsers[0];
+
+      if (found.isBlock) {
+        toast.warning("Your account has been blocked by admin. Please contact support."); 
+        return null;
+      }
+
+      setUser(found);
+      toast.success(`Welcome back, ${found.name}!`); 
+      return found;
     } catch (err) {
       console.error(err);
-      showError("Login failed! Please try again.");
+      toast.error("Login failed! Please try again."); 
+      return null;
     } finally {
       setLoading(false);
     }
   };
 
-  const logout = () => {
-    setUser(null);
-    showSuccess("Logged out successfully!");
-    navigate("/login");
-  };
 
-  return (
-    <AuthContext.Provider
-      value={{
-        user,
-        setUser,
-        login,
-        signup,
-        logout,
-        loading,
-      }}
-    >
-      {children}
-    </AuthContext.Provider>
-  );
+
+  const logout = () => {
+  setUser(null);
+  localStorage.removeItem("user");
+
+};
+  const value = { user, setUser, login, signup, logout, loading };
+
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

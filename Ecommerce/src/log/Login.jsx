@@ -1,32 +1,51 @@
+
 import React, { useState, useContext } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Eye, EyeOff, Lock, Mail } from "lucide-react";
 import { AuthContext } from "../Context/Authcontext";
 import LoadingSpinner from "../components/LoadingSpinner";
+import toast from "react-hot-toast";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const { login, loading } = useContext(AuthContext);
-  const location = useLocation();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await login(email, password);
+    try {
+      // login function should return the user object including role
+      const user = await login(email, password);
+      console.log("object",user)
+
+      if (user?.role === "admin") {
+        toast.success("Welcome Admin!");
+        navigate("/dashbord",{replace:true}); // redirect admin
+      } else if (user?.role === "user") {
+        toast.success("Login successful!");
+        navigate("/",{replace:true}); // redirect normal user
+      } else {
+        toast.error("Unknown role!");
+      }
+    } catch (err) {
+      console.error(err);
+      toast.error("Login failed!");
+    }
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-50 via-white to-purple-50 py-12 px-4">
       <div className="max-w-md w-full">
-        {/* Logo */}
+        {/* Logo and Header */}
         <div className="text-center mb-8">
           <div className="inline-flex items-center space-x-2 mb-4">
             <div className="w-10 h-10 bg-gradient-to-br from-indigo-600 to-purple-600 rounded-xl flex items-center justify-center">
               <span className="text-white font-bold">FC</span>
             </div>
             <span className="text-2xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
-              FurniCo
+              HOME HEVEN
             </span>
           </div>
           <h1 className="text-3xl font-bold text-gray-800 mb-2">Welcome Back!</h1>
@@ -87,23 +106,6 @@ export default function Login() {
               </div>
             </div>
 
-            {/* Remember Me & Forgot Password */}
-            <div className="flex items-center justify-between">
-              <label className="flex items-center">
-                <input
-                  type="checkbox"
-                  className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
-                />
-                <span className="ml-2 text-sm text-gray-600">Remember me</span>
-              </label>
-              <Link
-                to="/forgot-password"
-                className="text-sm text-indigo-600 hover:text-indigo-800 font-medium"
-              >
-                Forgot password?
-              </Link>
-            </div>
-
             {/* Login Button */}
             <button
               type="submit"
@@ -133,15 +135,6 @@ export default function Login() {
               </Link>
             </p>
           </div>
-        </div>
-
-        {/* Demo Credentials */}
-        <div className="mt-6 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
-          <h4 className="text-sm font-semibold text-yellow-800 mb-2">Demo Credentials:</h4>
-          <p className="text-xs text-yellow-700">
-            Email: fahad@mail.com<br/>
-            Password: 12345
-          </p>
         </div>
       </div>
     </div>

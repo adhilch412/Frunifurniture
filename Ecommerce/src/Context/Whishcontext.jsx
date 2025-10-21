@@ -1,35 +1,44 @@
-import React, { createContext, useState, useEffect, useContext } from "react";
-import axios from "axios";
-import { AuthContext } from "./Authcontext.jsx";
-import { showSuccess, showError } from "../utils/toast";
 
-const WishlistContext = createContext();
+import React, { createContext, useState, useEffect, useContext } from "react";
+import { AuthContext } from "./Authcontext";
+import api from "../Api/Axios-instance";
+import toast from "react-hot-toast";
+
+export const WishlistContext = createContext();
 
 export default function WishlistProvider({ children }) {
   const { user } = useContext(AuthContext);
   const [wishlist, setWishlist] = useState([]);
+  const [loading, setLoading] = useState(false);
 
+  // ===================Fetch wishlist whenever user changes===============================
   useEffect(() => {
-    if (!user) {
-      setWishlist([]);
-      return;
-    }
-
     const fetchWishlist = async () => {
+      if (!user) {
+        setWishlist([]);
+        return;
+      }
+
+      setLoading(true);
       try {
-        const res = await axios.get(`http://localhost:5005/users/${user.id}`);
-        setWishlist(res.data.wishlist || []);
+        const res = await api.get(`/users/${user.id}`);
+        const userData = res.data;
+        setWishlist(userData.wishlist || []);
       } catch (err) {
         console.error("Error fetching wishlist:", err);
+        toast.error("Failed to load wishlist");
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchWishlist();
   }, [user]);
 
+  // ===============================Toggle wishlist item======================================
   const toggleWishlist = async (product) => {
     if (!user) {
-      showError("Please login to manage wishlist!");
+      toast.error("Please login to manage wishlist!");
       return;
     }
 
@@ -38,55 +47,64 @@ export default function WishlistProvider({ children }) {
       ? wishlist.filter((item) => item.id !== product.id)
       : [...wishlist, product];
 
+    // Update UI instantly
     setWishlist(updatedWishlist);
-
+console.log(user.id)
     try {
-      await axios.patch(`http://localhost:5005/users/${user.id}`, {
+      await api.patch(`/users/${user.id}`, {
         wishlist: updatedWishlist,
       });
-      
-      showSuccess(
+
+      toast.success(
         exists
           ? `${product.name} removed from wishlist`
           : `${product.name} added to wishlist`
       );
     } catch (err) {
       console.error("Error updating wishlist in DB:", err);
-      showError("Failed to update wishlist");
+      toast.error("Failed to update wishlist");
       // Revert on error
-      setWishlist(exists ? [...wishlist, product] : wishlist.filter((item) => item.id !== product.id));
+      setWishlist(wishlist);
     }
   };
 
+  // =================Remove item directly==============================
   const removeFromWishlist = async (productId) => {
-    if (!user) return;
+    if (!user) {
+      toast.error("Please login to manage wishlist!");
+      return;
+    }
 
-    const productToRemove = wishlist.find(item => item.id === productId);
+    const productToRemove = wishlist.find((item) => item.id === productId);
     const updatedWishlist = wishlist.filter((item) => item.id !== productId);
+
     setWishlist(updatedWishlist);
 
     try {
-      await axios.patch(`http://localhost:5005/users/${user.id}`, {
+      await api.patch(`/users/${user.id}`, {
         wishlist: updatedWishlist,
       });
-      showSuccess("Item removed from wishlist");
+      toast.success("Item removed from wishlist");
     } catch (err) {
       console.error("Error removing from DB:", err);
-      showError("Failed to remove from wishlist");
+      toast.error("Failed to remove from wishlist");
       // Revert on error
       if (productToRemove) {
-        setWishlist(prev => [...prev, productToRemove]);
+        setWishlist((prev) => [...prev, productToRemove]);
       }
     }
   };
 
+  const value = {
+    wishlist,
+    toggleWishlist,
+    removeFromWishlist,
+    loading,
+  };
+
   return (
-    <WishlistContext.Provider
-      value={{ wishlist, toggleWishlist, removeFromWishlist }}
-    >
+    <WishlistContext.Provider value={value}>
       {children}
     </WishlistContext.Provider>
   );
 }
-
-export { WishlistContext };
